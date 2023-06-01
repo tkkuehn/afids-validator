@@ -1,14 +1,57 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "project": true,
+    "tsconfigRootDir": "."
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "extends": [
+    "eslint:all",
+    "plugin:@typescript-eslint/all",
+    "plugin:react/all",
     "prettier"
   ],
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ]
+  "rules": {
+    "func-style": 0,
+    "no-ternary": 0,
+    "no-duplicate-imports": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
+    "@typescript-eslint/naming-convention":[1, {"selector": "function", "format": ["camelCase", "PascalCase"]}],
+    "@typescript-eslint/prefer-readonly-parameter-types": 0
+  },
+  "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "fragment": "Fragment",
+      "version": "detect",
+      "flowVersion": "0.53"
+    },
+    "propWrapperFunctions": [
+        "forbidExtraProps",
+        {"property": "freeze", "object": "Object"},
+        {"property": "myFavoriteWrapper"},
+        {"property": "forbidExtraProps", "exact": true}
+    ],
+    "componentWrapperFunctions": [
+        "observer",
+        {"property": "styled"},
+        {"property": "observer", "object": "Mobx"},
+        {"property": "observer", "object": "<pragma>"}
+    ],
+    "formComponents": [
+      "CustomForm",
+      {"name": "Form", "formAttribute": "endpoint"}
+    ],
+    "linkComponents": [
+      "Hyperlink",
+      {"name": "Link", "linkAttribute": "to"}
+    ]
+  },
+  "env": {
+    "node": true,
+    "browser": true
+  }
 }

@@ -13,3 +13,7 @@ dist/
 
 # Workspaces
 afids.code-workspace
+
+id_rsa*
+id_test*
+releases

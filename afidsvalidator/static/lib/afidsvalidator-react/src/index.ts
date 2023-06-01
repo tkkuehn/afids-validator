@@ -5,6 +5,6 @@ globalThis.renderNavbar = renderNavbar;
 globalThis.renderFooter = renderFooter;
 
 export default {
-  renderNavbar,
-  renderFooter
+  renderFooter,
+  renderNavbar
 };

@@ -1,77 +1,70 @@
-import * as React from "react";
-import { Nav, Navbar, Row } from "react-bootstrap";
-import * as ReactDOM from "react-dom";
-import afidsBanner from "../../public/afids_banner.png";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { AfidsNavBar } from './AfidsNavBar';
+import type { NavProps } from './AfidsNav';
+import { Row } from 'react-bootstrap';
+import afidsBanner from '../../public/afids_banner.png';
 
-interface NavBarProps {
-  isLoggedIn: boolean;
+interface HeaderProps {
+  readonly isLoggedIn: boolean;
 }
 
-interface NavProps {
-  name: string;
-  url: string;
-  target: string;
-}
+const staticNavItems: NavProps[] = [
+  {
+    key: 'About',
+    target: '_self',
+    url: '/'
+  },
+  {
+    key: 'Protocol',
+    target: '_blank',
+    url: 'https://afids.github.io/afids-protocol/'
+  },
+  {
+    key: 'Validator',
+    target: '_self',
+    url: '/app.html'
+  },
+  {
+    key: 'Contact',
+    target: '_self',
+    url: '/contact.html'
+  }
+];
 
-function NavBar({ isLoggedIn }: NavBarProps) {
+function AfidsHeader({ isLoggedIn }: HeaderProps): JSX.Element {
   // Default navigation bar
-  const navData: NavProps[] = [
-    {
-      name: "About",
-      url: "/",
-      target: "_self",
-    },
-    {
-      name: "Protocol",
-      url: "https://afids.github.io/afids-protocol/",
-      target: "_blank",
-    },
-    {
-      name: "Validator",
-      url: "/app.html",
-      target: "_self",
-    },
-    {
-      name: "Contact",
-      url: "/contact.html",
-      target: "_self",
-    },
-    isLoggedIn
-      ? { name: "Logout", url: "/logout.html", target: "_self" }
-      : { name: "Login", url: "/login.html", target: "_self" },
-  ];
+  const logInOutNav = isLoggedIn
+      ? { key: 'Logout', target: '_self', url: '/logout.html' }
+      : { key: 'Login', target: '_self', url: '/login.html' },
+    navData = [...staticNavItems, logInOutNav];
 
   return (
     <>
       <Row>
         <img
-          className="mx-auto"
-          src={afidsBanner}
-          id="afids-banner"
           alt="Afids banner"
-        ></img>
+          className="mx-auto"
+          id="afids-banner"
+          src={afidsBanner}
+        />
       </Row>
 
-      <Navbar className="justify-content-center" variant="dark">
-        <Nav>
-          {navData.map((nav) => (
-            <Nav.Link href={nav.url} key={nav.name} target={nav.target}>
-              {nav.name}
-            </Nav.Link>
-          ))}
-        </Nav>
-      </Navbar>
+      <div className="justify-content-center">
+        <AfidsNavBar navs={navData} />
+      </div>
+
       <hr className="nav-hr" />
     </>
   );
 }
 
 // Need to pass currentUser from backend
-function renderNavbar(isLoggedIn: boolean) {
+function renderHeader(isLoggedIn: boolean): void {
   ReactDOM.render(
-    React.createElement(NavBar, { isLoggedIn: isLoggedIn }),
-    document.getElementById("react-navbar")
+    React.createElement(AfidsHeader, { isLoggedIn }),
+    document.getElementById('react-navbar')
   );
 }
 
-export default renderNavbar;
+export default renderHeader;
